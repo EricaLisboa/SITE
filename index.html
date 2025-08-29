@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>NBS Barbearia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="NBS Barbearia - Estilo, tradição e atendimento de qualidade. Venha conhecer nossos serviços exclusivos!">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: #222;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+        }
+        .logo-barbearia {
+            height: 48px;
+        }
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+        nav a {
+            color: #ffc107;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        nav a:hover, nav a:focus {
+            background: #333;
+            outline: none;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 40px 16px;
+        }
+        .hero-title {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #ffc107;
+            letter-spacing: 2px;
+        }
+        .hero-subtitle {
+            font-size: 1.3em;
+            margin-bottom: 32px;
+            color: #fff;
+        }
+        .hero-btn, .whatsapp-btn {
+            background: #ffc107;
+            color: #222;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            padding: 16px 36px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #0006;
+            transition: background 0.2s, transform 0.2s;
+            margin: 8px 0;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .hero-btn:hover, .hero-btn:focus,
+        .whatsapp-btn:hover, .whatsapp-btn:focus {
+            background: #e0a800;
+            outline: none;
+            transform: scale(1.05);
+        }
+        .about-section, .services-section {
+            background: #292929;
+            border-radius: 8px;
+            margin: 32px auto;
+            max-width: 700px;
+            padding: 32px 24px;
+            box-shadow: 0 2px 12px #0004;
+            text-align: center;
+        }
+        .about-section h2, .services-section h2 {
+            color: #ffc107;
+            margin-bottom: 12px;
+            font-size: 2em;
+        }
+        .about-section p, .services-section ul {
+            font-size: 1.1em;
+            color: #eee;
+        }
+        .services-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .services-section li {
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+        .social-icons {
+            margin-top: 16px;
+        }
+        .social-icons a {
+            color: #ffc107;
+            margin: 0 8px;
+            font-size: 1.5em;
+            transition: color 0.2s;
+        }
+        .social-icons a:hover {
+            color: #fff;
+        }
+        footer {
+            background: #111;
+            color: #ffc107;
+            text-align: center;
+            padding: 18px 0 8px 0;
+            font-size: 1em;
+            letter-spacing: 1px;
+            margin-top: 48px;
+        }
+        /* Modal styles + animação */
+        #adminModal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        #adminModal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .login-box {
+            background: #292929;
+            padding: 32px 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0004;
+            text-align: center;
+            width: 320px;
+            transform: translateY(-30px);
+            opacity: 0;
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        #adminModal.show .login-box {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .login-box h2 {
+            color: #ffc107;
+            margin-bottom: 24px;
+        }
+        .login-box input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
+            font-size: 1em;
+        }
+        .login-box button {
+            background: #ffc107;
+            color: #222;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 32px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 12px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .login-box button:hover {
+            background: #e0a800;
+            transform: scale(1.05);
+        }
+        .error {
+            color: #ff4d4d;
+            margin-top: 8px;
+        }
+        /* Fade-in nas seções */
+        .fadein {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s, transform 0.7s;
+        }
+        .fadein.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 16px;
+            }
+            nav {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+                margin-top: 12px;
+            }
+            nav a {
+                width: 100%;
+                text-align: left;
+                padding-left: 0;
+            }
+            .logo-barbearia {
+                height: 40px;
+            }
+            .hero-title {
+                font-size: 2em;
+            }
+            .about-section, .services-section {
+                padding: 20px 8px;
+            }
+            .login-box {
+                width: 95vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo-barbearia.png" alt="Logo NBS Barbearia" class="logo-barbearia">
+        <nav aria-label="Menu principal">
+            <a href="#" aria-label="Página inicial">Home</a>
+            <a href="#" aria-label="Clube de benefícios">Clube</a>
+            <a href="#sobre" aria-label="Sobre a barbearia">Sobre</a>
+            <a href="#" id="admin-link" aria-label="Painel do Administrador">Administrador</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero fadein">
+            <h1 class="hero-title">NBS Barbearia</h1>
+            <p class="hero-subtitle">Estilo e cuidado em cada detalhe</p>
+            <a href="cadastro.html" class="hero-btn" aria-label="Faça Login ou Cadastre-se">Faça Login ou Cadastre-se</a>
+            <a href="https://wa.me/5575981440612" target="_blank" class="whatsapp-btn" aria-label="Fale conosco pelo WhatsApp">
+                <i class="fab fa-whatsapp"></i> Fale conosco
+            </a>
+        </section>
+
+        <section class="about-section fadein" id="sobre">
+            <h2>Sobre a NBS Barbearia</h2>
+            <p>
+                Somos apaixonados por estilo, tradição e atendimento de qualidade. Na NBS Barbearia, cada cliente é único e merece o melhor cuidado. Venha conhecer nosso espaço, equipe especializada e serviços exclusivos para você sair sempre renovado!
+            </p>
+        </section>
+
+        <section class="services-section fadein" id="servicos">
+            <h2>Serviços</h2>
+            <ul>
+                <li>Corte masculino</li>
+                <li>Barba e bigode</li>
+                <li>Design de sobrancelha</li>
+                <li>Tratamentos capilares</li>
+                <li>Clube de benefícios</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        © NBS Barbearia - Todos os direitos reservados.
+        <div class="social-icons">
+            <a href="https://www.instagram.com/nbsbarbershopp?igsh=OHkzNG94dW4waTRr" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/5575981440612" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </footer>
+
+    <!-- Modal de login administrador -->
+    <div id="adminModal" aria-modal="true" role="dialog" tabindex="-1">
+        <div class="login-box">
+            <h2>Login Administrador</h2>
+            <form id="adminLoginForm">
+                <input type="text" id="usuario" placeholder="Usuário" required><br>
+                <input type="password" id="senha" placeholder="Senha" required><br>
+                <button type="submit">Entrar</button>
+                <div class="error" id="errorMsg"></div>
+            </form>
+            <button onclick="fecharModal()" style="margin-top:10px;">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        // Abrir modal com animação
+        document.getElementById('admin-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const modal = document.getElementById('adminModal');
+            modal.classList.add('show');
+            document.getElementById('usuario').focus();
+        });
+
+        // Fechar modal
+        function fecharModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.remove('show');
+            document.getElementById('adminLoginForm').reset();
+            document.getElementById('errorMsg').textContent = '';
+        }
+
+        // Validar login
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+            if (usuario === 'admin' && senha === '123456') {
+                window.location.href = 'admin.html';
+            } else {
+                document.getElementById('errorMsg').textContent = 'Usuário ou senha incorretos!';
+            }
+        });
+
+        // Fechar modal com ESC
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') fecharModal();
+        });
+
+        // Fechar modal ao clicar fora da caixa
+        document.getElementById('adminModal').addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
+        });
+
+        // Fade-in nas seções ao carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fadein').forEach(el => {
+                setTimeout(() => el.classList.add('visible'), 200);
+            });
+        });
+    </script>
+</body>
+</html>

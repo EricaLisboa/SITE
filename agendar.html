@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendar Horário | NBS Barbearia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .agendar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      gap: 40px;
+      padding: 20px;
+      background: #121212;
+    }
+    .agendar__imagem {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 400px;
+    }
+    .agendar__imagem img {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 18px;
+      box-shadow: 0 0 24px rgba(255,193,7,0.18);
+      object-fit: cover;
+    }
+    .agendar__formulario {
+      flex: 1;
+      max-width: 480px;
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.15);
+    }
+    .agendar__titulo {
+      color: #ffc107;
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .agendar__grupo {
+      margin-bottom: 18px;
+    }
+    .agendar__label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+    .agendar__input,
+    .agendar__select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      background-color: #2b2b2b;
+      border: 1px solid #444;
+      color: #fff;
+      font-size: 15px;
+    }
+    .agendar__botao {
+      width: 100%;
+      background-color: #ffc107;
+      color: #000;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+    .agendar__botao:hover {
+      background-color: #e0a800;
+    }
+    @media (max-width: 900px) {
+      .agendar {
+        flex-direction: column;
+        gap: 24px;
+        padding: 16px;
+      }
+      .agendar__imagem {
+        max-width: 100%;
+      }
+      .agendar__formulario {
+        max-width: 100%;
+      }
+    }
+    @media (max-width: 480px) {
+      .agendar__formulario {
+        padding: 25px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="agendar">
+    <section class="agendar__imagem">
+      <img src="noel-barbearia.jpeg" alt="Foto da Barbearia NBS">
+    </section>
+    <section class="agendar__formulario">
+      <h1 class="agendar__titulo">Agende seu horário</h1>
+      <form id="form-agendamento">
+        <div class="agendar__grupo">
+          <label for="nome" class="agendar__label">Nome</label>
+          <input type="text" id="nome" class="agendar__input" required>
+        </div>
+        <div class="agendar__grupo">
+          <label for="whatsapp" class="agendar__label">WhatsApp</label>
+          <input type="tel" id="whatsapp" class="agendar__input" required placeholder="(DDD) 99999-9999">
+        </div>
+        <div class="agendar__grupo">
+          <label for="servico" class="agendar__label">Serviço</label>
+          <select id="servico" class="agendar__select" required>
+            <option value="">Selecione</option>
+            <option value="Corte Social">Corte Social - R$25</option>
+            <option value="Corte Degradê">Corte Degradê - R$30</option>
+            <option value="Barba">Barba - R$20</option>
+            <option value="Sobrancelha">Sobrancelha - R$10</option>
+            <option value="Corte + Barba">Corte + Barba - R$45</option>
+          </select>
+        </div>
+        <div class="agendar__grupo">
+          <label for="data" class="agendar__label">Dia</label>
+          <input type="date" id="data" class="agendar__input" required>
+        </div>
+        <div class="agendar__grupo">
+          <label for="hora" class="agendar__label">Horário</label>
+          <select id="hora" class="agendar__select js-horarios" required>
+            <option value="">Escolha o horário</option>
+            <optgroup label="Manhã">
+              <option value="09:00">09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+            </optgroup>
+            <optgroup label="Tarde">
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+              <option value="16:00">16:00</option>
+              <option value="17:00">17:00</option>
+              <option value="18:00">18:00</option>
+            </optgroup>
+          </select>
+        </div>
+        <button class="agendar__botao" type="submit">Confirmar Agendamento</button>
+      </form>
+    </section>
+  </main>
+  <script>
+    document.getElementById("form-agendamento").addEventListener("submit", function(event){
+      event.preventDefault();
+      alert("Agendamento confirmado! Entraremos em contato via WhatsApp.");
+      // Em breve:
+      // - Verificar horários ocupados via JS
+      // - Salvar agendamento
+      // - Redirecionar ou limpar campos
+    });
+  </script>
+</body>
+</html>

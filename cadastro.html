@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>NBS Barbearia | Login/Cadastro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #0e0e0e;
+      color: #e7e7e7;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #161616;
+      border-radius: 14px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+      max-width: 520px;
+      width: 100%;
+      margin: auto;
+      padding: 0 0 32px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .card__head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 32px 0 32px;
+    }
+    .card__logo {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #222;
+      box-shadow: 0 0 8px rgba(255,193,7,0.12);
+      margin-bottom: 12px;
+    }
+    .card__title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffc107;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .card__subtitle {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .form {
+      padding: 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .form__group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .form__label {
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+      color: #e7e7e7;
+      font-weight: 500;
+    }
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      background: #222;
+      border: 1.5px solid #2a2a2a;
+      border-radius: 9px;
+      padding: 10px 14px;
+      transition: border-color 0.2s;
+    }
+    .input {
+      background: transparent;
+      border: none;
+      color: #e7e7e7;
+      font-size: 1rem;
+      flex: 1;
+      outline: none;
+      padding-left: 8px;
+    }
+    .input:focus {
+      outline: 2px solid #ffc107;
+    }
+    .input-wrap svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffc107;
+      flex-shrink: 0;
+    }
+    .input[aria-invalid="true"] ~ .help,
+    .input[aria-invalid="true"] {
+      border-color: #e53935 !important;
+    }
+    .input[aria-invalid="true"] {
+      outline: 2px solid #e53935;
+    }
+    .help {
+      color: #e53935;
+      font-size: 0.92rem;
+      margin-top: 4px;
+      min-height: 18px;
+      transition: color 0.2s;
+    }
+    .btn {
+      width: 100%;
+      border-radius: 9px;
+      border: none;
+      font-size: 1.08rem;
+      font-weight: bold;
+      padding: 13px 0;
+      margin-top: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      background: #2a2a2a;
+      color: #ffc107;
+    }
+    .btn--primary {
+      background: #ffc107;
+      color: #161616;
+      margin-bottom: 6px;
+    }
+    .btn--primary:focus {
+      outline: 2px solid #ffc107;
+    }
+    .legal {
+      font-size: 0.92rem;
+      color: #aaa;
+      text-align: center;
+      margin: 18px 0 0 0;
+      line-height: 1.5;
+    }
+    .legal a {
+      color: #ffc107;
+      text-decoration: underline;
+      font-size: 0.95em;
+    }
+    .switch-link {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.98rem;
+      color: #ccc;
+    }
+    .switch-link a {
+      color: #ffc107;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.98rem;
+    }
+    .back-link a {
+      color: #ffc107;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222;
+      color: #ffc107;
+      padding: 13px 28px;
+      border-radius: 8px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+      font-size: 1.08rem;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .toast--show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (max-width: 600px) {
+      .card {
+        max-width: 98vw;
+        padding: 0 0 24px 0;
+      }
+      .card__head {
+        padding: 22px 12px 0 12px;
+      }
+      .form {
+        padding: 0 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <div class="card__head">
+      <img src="logo-barbearia.png" alt="Logo NBS Barbearia" class="card__logo">
+      <div class="card__title">NBS Barbearia</div>
+      <div class="card__subtitle" id="card-subtitle">Entrar na sua conta</div>
+    </div>
+    <!-- Formulário de Login -->
+    <form class="form form--active" id="form-login" autocomplete="off" novalidate>
+      <div class="form__group">
+        <label for="login-email" class="form__label">E-mail</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="3"/><polyline points="3 7 12 13 21 7"/></svg>
+          <input type="email" id="login-email" name="login-email" class="input" required autocomplete="email" aria-invalid="false">
+        </div>
+        <div class="help" id="help-login-email"></div>
+      </div>
+      <div class="form__group">
+        <label for="login-senha" class="form__label">Senha</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <input type="password" id="login-senha" name="login-senha" class="input" required autocomplete="current-password" aria-invalid="false">
+        </div>
+        <div class="help" id="help-login-senha"></div>
+      </div>
+      <button type="submit" class="btn btn--primary" id="btn-entrar">Entrar</button>
+    </form>
+    <!-- Formulário de Cadastro (inicialmente oculto) -->
+    <form class="form" id="form-cadastro" autocomplete="off" novalidate style="display:none;">
+      <div class="form__group">
+        <label for="nome" class="form__label">Nome completo</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 16-4 16 0"/></svg>
+          <input type="text" id="nome" name="nome" class="input" minlength="3" required autocomplete="name" aria-invalid="false">
+        </div>
+        <div class="help" id="help-nome"></div>
+      </div>
+      <div class="form__group">
+        <label for="email" class="form__label">E-mail</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="3"/><polyline points="3 7 12 13 21 7"/></svg>
+          <input type="email" id="email" name="email" class="input" required autocomplete="email" aria-invalid="false">
+        </div>
+        <div class="help" id="help-email"></div>
+      </div>
+      <div class="form__group">
+        <label for="whatsapp" class="form__label">WhatsApp</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24"><path d="M6.5 3.5a16 16 0 0 1 11 0c1.2.5 2 1.7 2 3v11c0 1.3-.8 2.5-2 3a16 16 0 0 1-11 0c-1.2-.5-2-1.7-2-3v-11c0-1.3.8-2.5 2-3z"/><path d="M8 7h8v2H8z"/></svg>
+          <input type="tel" id="whatsapp" name="whatsapp" class="input" required autocomplete="tel" aria-invalid="false">
+        </div>
+        <div class="help" id="help-whatsapp"></div>
+      </div>
+      <div class="form__group">
+        <label for="senha" class="form__label">Senha</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <input type="password" id="senha" name="senha" class="input" minlength="6" required autocomplete="new-password" aria-invalid="false">
+        </div>
+        <div class="help" id="help-senha"></div>
+      </div>
+      <div class="form__group">
+        <label for="confirmaSenha" class="form__label">Confirmar senha</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <input type="password" id="confirmaSenha" name="confirmaSenha" class="input" minlength="6" required autocomplete="new-password" aria-invalid="false">
+        </div>
+        <div class="help" id="help-confirmaSenha"></div>
+      </div>
+      <button type="submit" class="btn btn--primary" id="btn-cadastrar">Criar sua conta</button>
+    </form>
+    <div class="legal">
+      Ao continuar, você concorda com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>.
+    </div>
+    <div class="switch-link" id="switch-link">
+      <span id="switch-to-cadastro">Não tem conta? <a href="#">Criar conta</a></span>
+      <span id="switch-to-login" style="display:none;">Já possui conta? <a href="#">Entrar</a></span>
+    </div>
+    <div class="back-link">
+      <a href="index.html">Voltar à página inicial</a>
+    </div>
+  </div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script>
+    // Utils
+    function isEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    }
+    function isPhoneBr(phone) {
+      return /^(\(?\d{2}\)?\s?)?(\d{4,5}\-?\d{4})$/.test(phone.replace(/\s+/g, ''));
+    }
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.background = isError ? '#e53935' : '#222';
+      toast.style.color = isError ? '#fff' : '#ffc107';
+      toast.classList.add('toast--show');
+      setTimeout(() => toast.classList.remove('toast--show'), 3200);
+    }
+
+    // Alternância entre login e cadastro
+    const formLogin = document.getElementById('form-login');
+    const formCadastro = document.getElementById('form-cadastro');
+    const cardSubtitle = document.getElementById('card-subtitle');
+    const switchToCadastro = document.getElementById('switch-to-cadastro');
+    const switchToLogin = document.getElementById('switch-to-login');
+
+    switchToCadastro.querySelector('a').addEventListener('click', function(e) {
+      e.preventDefault();
+      formLogin.style.display = 'none';
+      formCadastro.style.display = 'flex';
+      cardSubtitle.textContent = 'Crie sua conta';
+      switchToCadastro.style.display = 'none';
+      switchToLogin.style.display = 'inline';
+    });
+
+    switchToLogin.querySelector('a').addEventListener('click', function(e) {
+      e.preventDefault();
+      formLogin.style.display = 'flex';
+      formCadastro.style.display = 'none';
+      cardSubtitle.textContent = 'Entrar na sua conta';
+      switchToCadastro.style.display = 'inline';
+      switchToLogin.style.display = 'none';
+    });
+
+    // Login
+    formLogin.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = formLogin['login-email'].value.trim();
+      const senha = formLogin['login-senha'].value;
+      let clientes = [];
+      try {
+        clientes = JSON.parse(localStorage.getItem('users:clientes')) || [];
+      } catch {}
+      const user = clientes.find(u => u.email === email && u.senha === senha);
+      if (user) {
+        sessionStorage.setItem('role', 'cliente');
+        showToast('Login realizado com sucesso!');
+        setTimeout(() => window.location.href = 'agendar.html', 1200);
+      } else {
+        showToast('E-mail ou senha incorretos!', true);
+      }
+    });
+
+    // Cadastro
+    formCadastro.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+      // Nome
+      const nome = formCadastro.nome.value.trim();
+      const nomeInput = formCadastro.nome;
+      const helpNome = document.getElementById('help-nome');
+      if (nome.length < 3) {
+        nomeInput.setAttribute('aria-invalid', 'true');
+        helpNome.textContent = 'Digite pelo menos 3 caracteres.';
+        valid = false;
+      } else {
+        nomeInput.setAttribute('aria-invalid', 'false');
+        helpNome.textContent = '';
+      }
+      // Email
+      const email = formCadastro.email.value.trim();
+      const emailInput = formCadastro.email;
+      const helpEmail = document.getElementById('help-email');
+      if (!isEmail(email)) {
+        emailInput.setAttribute('aria-invalid', 'true');
+        helpEmail.textContent = 'E-mail inválido.';
+        valid = false;
+      } else {
+        emailInput.setAttribute('aria-invalid', 'false');
+        helpEmail.textContent = '';
+      }
+      // WhatsApp
+      const whatsapp = formCadastro.whatsapp.value.trim();
+      const whatsappInput = formCadastro.whatsapp;
+      const helpWhatsapp = document.getElementById('help-whatsapp');
+      if (!isPhoneBr(whatsapp)) {
+        whatsappInput.setAttribute('aria-invalid', 'true');
+        helpWhatsapp.textContent = 'Informe um WhatsApp válido.';
+        valid = false;
+      } else {
+        whatsappInput.setAttribute('aria-invalid', 'false');
+        helpWhatsapp.textContent = '';
+      }
+      // Senha
+      const senha = formCadastro.senha.value;
+      const senhaInput = formCadastro.senha;
+      const helpSenha = document.getElementById('help-senha');
+      if (senha.length < 6) {
+        senhaInput.setAttribute('aria-invalid', 'true');
+        helpSenha.textContent = 'Mínimo 6 caracteres.';
+        valid = false;
+      } else {
+        senhaInput.setAttribute('aria-invalid', 'false');
+        helpSenha.textContent = '';
+      }
+      // Confirmar senha
+      const confirmaSenha = formCadastro.confirmaSenha.value;
+      const confirmaSenhaInput = formCadastro.confirmaSenha;
+      const helpConfirmaSenha = document.getElementById('help-confirmaSenha');
+      if (confirmaSenha !== senha || confirmaSenha.length < 6) {
+        confirmaSenhaInput.setAttribute('aria-invalid', 'true');
+        helpConfirmaSenha.textContent = 'Senhas não conferem.';
+        valid = false;
+      } else {
+        confirmaSenhaInput.setAttribute('aria-invalid', 'false');
+        helpConfirmaSenha.textContent = '';
+      }
+      if (!valid) return;
+
+      // Simula cadastro no localStorage
+      let clientes = [];
+      try {
+        clientes = JSON.parse(localStorage.getItem('users:clientes')) || [];
+      } catch {}
+      if (clientes.some(u => u.email === email)) {
+        showToast('E-mail já cadastrado.', true);
+        return;
+      }
+      clientes.push({ nome, email, whatsapp, senha });
+      localStorage.setItem('users:clientes', JSON.stringify(clientes));
+      sessionStorage.setItem('role', 'cliente');
+      showToast('Cadastro realizado com sucesso!');
+      setTimeout(() => window.location.href = 'agendar.html', 1200);
+    });
+
+    // Acessibilidade: foco visível nos campos
+    document.querySelectorAll('.input').forEach(input => {
+      input.addEventListener('focus', function() {
+        input.style.outline = '2px solid #ffc107';
+      });
+      input.addEventListener('blur', function() {
+        input.style.outline = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
+

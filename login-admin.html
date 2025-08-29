@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Administrador - NBS Barbearia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #222;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-box {
+            background: #292929;
+            padding: 32px 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0004;
+            text-align: center;
+            width: 320px;
+        }
+        .login-box h2 {
+            color: #ffc107;
+            margin-bottom: 24px;
+        }
+        .login-box input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
+            font-size: 1em;
+        }
+        .login-box button {
+            background: #ffc107;
+            color: #222;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 32px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 12px;
+        }
+        .login-box button:hover {
+            background: #e0a800;
+        }
+        .error {
+            color: #ff4d4d;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>Login Administrador</h2>
+        <form id="adminLoginForm">
+            <input type="text" id="usuario" placeholder="Usuário" required><br>
+            <input type="password" id="senha" placeholder="Senha" required><br>
+            <button type="submit">Entrar</button>
+            <div class="error" id="errorMsg"></div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+            // Simulação: usuário admin e senha 123456
+            if (usuario === 'admin' && senha === '123456') {
+                window.location.href = 'admin.html';
+            } else {
+                document.getElementById('errorMsg').textContent = 'Usuário ou senha incorretos!';
+            }
+        });
+    </script>
+</body>
+</html>
